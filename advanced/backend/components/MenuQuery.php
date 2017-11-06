@@ -6,7 +6,7 @@
  * Time: 16:00
  */
 
-namespace backend\compoments;
+namespace backend\components;
 
 
 use yii\db\ActiveQuery;

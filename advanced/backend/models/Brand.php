@@ -20,7 +20,7 @@ class Brand extends \yii\db\ActiveRecord
      * @inheritdoc
      */
 //    设置属性
-    public static $statusArray=['-1'=>'删除','1'=>'显示'];
+    public static $statusArray=['-1'=>'隐藏','1'=>'显示'];
     //public $image;
     public static function tableName()
     {

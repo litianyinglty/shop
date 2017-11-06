@@ -2,7 +2,7 @@
 
 namespace backend\models;
 
-use backend\compoments\MenuQuery;
+use backend\components\MenuQuery;
 use creocoder\nestedsets\NestedSetsBehavior;
 use Yii;
 
@@ -34,7 +34,7 @@ class GoodsCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id'], 'required'],
+            [['name','parent_id','intro'], 'required'],
             [['parent_id', 'tree', 'lft', 'rgt', 'depth'], 'integer'],
             [['name'], 'string', 'max' => 40],
             [['intro'], 'string', 'max' => 255],
@@ -62,10 +62,10 @@ class GoodsCategory extends \yii\db\ActiveRecord
         return [
             'tree' => [
                 'class' => NestedSetsBehavior::className(),
-                // 'treeAttribute' => 'tree',
-                // 'leftAttribute' => 'lft',
-                // 'rightAttribute' => 'rgt',
-                // 'depthAttribute' => 'depth',
+                'treeAttribute' => 'tree',
+                 'leftAttribute' => 'lft',
+                 'rightAttribute' => 'rgt',
+                 'depthAttribute' => 'depth',
             ],
         ];
     }

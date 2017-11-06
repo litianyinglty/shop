@@ -19,7 +19,7 @@ class BrandController extends \yii\web\Controller
 //        1、总页数
         $count=Brand::find()->where(['!=','status','-1'])->count();
 //        2、每页显示条数
-        $pageSize=2;
+        $pageSize=5;
 //        3、创建分页对象
         $page=new Pagination([
             'pageSize'=>$pageSize,
@@ -78,10 +78,22 @@ class BrandController extends \yii\web\Controller
      */
     public function actionDel($id)
     {
-        if(Brand::findOne($id)->delete()){
-            \Yii::$app->session->setFlash("success","删除成功");
-            return $this->redirect(['brand/reclaims']);
+        $brand=Brand::findOne($id);
+        if(substr($brand->logo,0,7)=="http://"){
+            $qiNiu=new Qiniu($config = [
+                'accessKey'=>'Hy-VyRINX9t6kU2TNURfGP1TYs6Xc0E_eg2lh81F',                      'secretKey'=>'kUU1g3oltnhBSR_knK7sDhrRUyYZWZ9gmP3GPhRd',
+                'domain'=>'http://oyvirytup.bkt.clouddn.com/',
+                'bucket'=>'yii2shop',
+                'area'=>Qiniu::AREA_HUANAN
+            ]);
+            $key=substr($brand->logo,-10);
+            $qiNiu->delete($key,'yii2shop');
+            $brand->delete();
+        }else{
+            $brand->delete();
         }
+        \Yii::$app->session->setFlash("success","删除成功");
+        return $this->redirect(['brand/index']);
     }
 
     /**
@@ -150,14 +162,14 @@ class BrandController extends \yii\web\Controller
     /**
      * 删除七牛云图片
      */
-    public function actionDelQi()
-    {
-        $qiNiu=new Qiniu($config = [
-            'accessKey'=>'Hy-VyRINX9t6kU2TNURfGP1TYs6Xc0E_eg2lh81F',                      'secretKey'=>'kUU1g3oltnhBSR_knK7sDhrRUyYZWZ9gmP3GPhRd',
-            'domain'=>'http://oyvirytup.bkt.clouddn.com/',
-            'bucket'=>'yii2shop',
-            'area'=>Qiniu::AREA_HUANAN
-        ]);
-        $qiNiu->delete('','yii2shop');
-    }
+//    public function actionDelQi()
+//    {
+//        $qiNiu=new Qiniu($config = [
+//            'accessKey'=>'Hy-VyRINX9t6kU2TNURfGP1TYs6Xc0E_eg2lh81F',                      'secretKey'=>'kUU1g3oltnhBSR_knK7sDhrRUyYZWZ9gmP3GPhRd',
+//            'domain'=>'http://oyvirytup.bkt.clouddn.com/',
+//            'bucket'=>'yii2shop',
+//            'area'=>Qiniu::AREA_HUANAN
+//        ]);
+//        $qiNiu->delete('','yii2shop');
+//    }
 }
