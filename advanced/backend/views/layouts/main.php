@@ -29,8 +29,10 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+//        'brandLabel' => Yii::$app->name,
+//        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => '商城项目',
+        'brandUrl' => 'https://github.com/litianyinglty/shop/tree/master/advanced',
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
@@ -39,7 +41,10 @@ AppAsset::register($this);
 //        ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Brand', 'url' => ['/brand/index']],
         ['label' => 'Article', 'url' => ['/article/index']],
+        ['label' => 'ArticleCategory', 'url' => ['/article-cate/index']],
+        ['label' => 'Goods', 'url' => ['/goods/index']],
         ['label' => 'GoodsCategory', 'url' => ['/goods-category/index']],
+//        ['label' => 'GoodsCategory', 'url' => ['/goods-category/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -71,8 +76,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
+        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y-m-d H:i:s') ?></p>
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

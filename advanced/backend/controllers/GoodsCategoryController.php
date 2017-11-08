@@ -68,7 +68,7 @@ class GoodsCategoryController extends \yii\web\Controller
         $cates=GoodsCategory::find()->where(['parent_id'=>$id])->all();
 //            var_dump($cates);exit;
         if(!empty($cates)){
-            \Yii::$app->session->setFlash('success','该节点下有子类，不能移动');
+            \Yii::$app->session->setFlash('danger','该节点下有子类不能移动');
             return $this->redirect(['goods-category/index']);
         }
 //        $model=new GoodsCategory();
@@ -83,8 +83,8 @@ class GoodsCategoryController extends \yii\web\Controller
             //准备修改数据的深度
             $depth_b=$model->depth;
             if($depth_b<=$depth_a){
-               \Yii::$app->session->setFlash('success','不能修改到同类和子类中');
-               return $this->redirect(['goods-category/index']);
+               \Yii::$app->session->setFlash('danger','不能修改到同类和子类中');
+               return $this->redirect(['goods-category/edit','id'=>$id]);
             }
             GoodsCategory::findOne(['id'=>$request->post()->parent_id]);
 //            数据绑定

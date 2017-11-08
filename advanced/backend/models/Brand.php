@@ -58,6 +58,10 @@ class Brand extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 得到图片地址
+     * @return string
+     */
     public function getImage()
     {
         if(substr($this->logo,0,7)=="http://"){

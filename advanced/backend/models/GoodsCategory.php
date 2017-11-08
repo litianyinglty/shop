@@ -82,4 +82,10 @@ class GoodsCategory extends \yii\db\ActiveRecord
 
         return new MenuQuery(get_called_class());
     }
+
+    public function getNameText()
+    {
+        return str_repeat('...',3*$this->depth).$this->name;
+
+    }
 }

@@ -103,7 +103,7 @@ class BrandController extends \yii\web\Controller
      */
     public function actionReclaim($id)
     {
-        if (Brand::updateAll(['status' => -1], ['id' => $id])) {
+        if (Brand::updateAll(['status' => -1],['id' => $id])) {
             \Yii::$app->session->setFlash("success", "加入回收站成功");
             return $this->redirect(['brand/index']);
         }

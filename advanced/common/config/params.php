@@ -20,7 +20,7 @@ return [
                 'mimeTypes' => 'image/*',
             ],
             'pick' => [
-                'multiple' => false,
+                'multiple' => true,
             ],
         ],
     ],

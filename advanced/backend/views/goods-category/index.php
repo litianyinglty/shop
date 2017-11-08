@@ -7,9 +7,9 @@ use leandrogehlen\treegrid\TreeGrid;
             'dataProvider' => $dataProvider,
             'keyColumnName' => 'id',
             'parentColumnName' => 'parent_id',
-            'parentRootValue' => '0', //first parentId value
+            'parentRootValue' => '0', //第一个父ID值
             'pluginOptions' => [
-                'initialState' => 'collapsed',
+//                'initialState' => 'collapsed',
             ],
             'columns' => [
                 'id',
