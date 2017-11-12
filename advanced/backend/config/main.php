@@ -17,9 +17,16 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+//            'identityClass' => 'common\models\User',
+            'identityClass' => \backend\models\Admin::className(),
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'loginUrl' => 'admin/login',
+            'on beforeLogin' => function($event) {
+                $admin = $event->identity; //这里的就是User Model的实例了
+                $admin->last_login_time = time();
+                $admin->save();
+            },
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend

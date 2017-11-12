@@ -8,14 +8,25 @@ use backend\models\GoodsCategory;
 use backend\models\GoodsDayCount;
 use backend\models\GoodsGallery;
 use backend\models\GoodsIntro;
+use backend\models\SearchForm;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use flyok666\qiniu\Qiniu;
 use common\components\Upload;
 use yii\helpers\Json;
 
+
 class GoodsController extends \yii\web\Controller
 {
+
+    public function actions()
+    {
+        return [
+            'upload' => [
+                'class' => 'kucha\ueditor\UEditorAction',
+            ]
+        ];
+    }
     /**
      * 列表显示
      * @return string
@@ -24,19 +35,22 @@ class GoodsController extends \yii\web\Controller
     {
 //        关键字搜索
 //        首先构造查询对象
-        $query=Goods::find();
+        $query=Goods::find()->where(['status'=>1]);
         $request=\Yii::$app->request;
-//        接收变量值
+//        原生HTML表单接收值
         $keyword=$request->get('keyword');
-        $minPrice=$request->get('minprice');
-        $maxPrice=$request->get('maxprice');
+        $minPrice=$request->get('minPrice');
+        $maxPrice=$request->get('maxPrice');
 //        $status=$request->get('status');
-//        var_dump($keyword);exit;
+//      表单生成接收变量值
+//        $requests=$request->get("SearchForm");
+//        $keyword=$requests["keyword"];
+//        $minPrice=$requests['minPrice'];
+//        $maxPrice=$requests['maxPrice'];
 //        判断最低价是否大于0，表示输了值
         if($minPrice>0){
 //            拼接条件
             $query->andWhere("shop_price >= {$minPrice}");
-//            var_dump($aa);exit;
         }
 //        判断最高价是否大于0
         if($maxPrice>0){
@@ -44,19 +58,17 @@ class GoodsController extends \yii\web\Controller
             $query->andWhere("shop_price <= {$maxPrice}");
         }
 //        判断关键字
-        if(isset($keyword)){
+        if(!empty($keyword)){
 //            拼接条件
             $query->andWhere("name like '%{$keyword}%' or sn like '%{$keyword}%'");
         }
 //        if($status==='1' && $status==='0'){
 //            $query->andWhere("status = {$status}");
 //        }
-//        $result=$query->count();
-//        var_dump($result);exit;
 //        分页总条数
         $count=$query->count();
 //        每页显示条数
-        $pageSize=5;
+        $pageSize=2;
         $page=new Pagination([
             'pageSize'=>$pageSize,
             'totalCount'=>$count,
@@ -190,8 +202,8 @@ class GoodsController extends \yii\web\Controller
             return $this->redirect(['goods/index']);
         }
 //        得到所有商品分类
-        $cates=GoodsCategory::find()->all();
-        $options=ArrayHelper::map($cates,'id','name');
+        $cates=GoodsCategory::find()->orderBy('tree,lft')->all();
+        $options=ArrayHelper::map($cates,'id','nameText');
 //        $cates=GoodsCategory::find()->asArray()->all();
 //        $cates=json_encode($cates);
 //        得到所有品牌
@@ -259,17 +271,17 @@ class GoodsController extends \yii\web\Controller
 //        var_dump($goodsDayCount->count);exit;
         $goodsGallerys=GoodsGallery::find()->where(['goods_id'=>$id])->all();
         foreach ($goodsGallerys as $goodsGallery) {
-                $config = [
-                    'accessKey' => 'Hy-VyRINX9t6kU2TNURfGP1TYs6Xc0E_eg2lh81F',
-                    'secretKey' => 'kUU1g3oltnhBSR_knK7sDhrRUyYZWZ9gmP3GPhRd',
-                    'domain' => 'http://oyvirytup.bkt.clouddn.com/',
-                    'bucket' => 'yii2shop',
-                    'area' => Qiniu::AREA_HUANAN
-                ];
-            $key = substr($goodsGallery->path, -10);
-            $qiNiu = new Qiniu($config);
-            $qiNiu->delete($key);
-            }
+        $config = [
+            'accessKey' => 'Hy-VyRINX9t6kU2TNURfGP1TYs6Xc0E_eg2lh81F',
+            'secretKey' => 'kUU1g3oltnhBSR_knK7sDhrRUyYZWZ9gmP3GPhRd',
+            'domain' => 'http://oyvirytup.bkt.clouddn.com/',
+            'bucket' => 'yii2shop',
+            'area' => Qiniu::AREA_HUANAN
+        ];
+        $key = substr($goodsGallery->path, -10);
+        $qiNiu = new Qiniu($config);
+        $qiNiu->delete($key);
+        }
             $config = [
                 'accessKey' => 'Hy-VyRINX9t6kU2TNURfGP1TYs6Xc0E_eg2lh81F',
                 'secretKey' => 'kUU1g3oltnhBSR_knK7sDhrRUyYZWZ9gmP3GPhRd',

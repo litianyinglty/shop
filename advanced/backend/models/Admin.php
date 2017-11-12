@@ -26,6 +26,7 @@ use yii\web\IdentityInterface;
 //继承自动登录接口
 class Admin extends ActiveRecord implements IdentityInterface
 {
+    public $roles=[];
     /**
      * @inheritdoc
      */
@@ -43,10 +44,10 @@ class Admin extends ActiveRecord implements IdentityInterface
             [['username','password','email'],'required'],
             [['token_create_time', 'add_time', 'last_login_time'], 'integer'],
             [['username'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 80],
-            [['salt', 'token'], 'string', 'max' => 1],
+            [['token'], 'string', 'max' => 32],
             [['email'],'email'],
-            [['last_login_ip'], 'string', 'max' => 15],
+            [['last_login_ip'], 'string', 'max' => 20],
+            [['roles'],'safe'],
         ];
     }
 
@@ -61,9 +62,10 @@ class Admin extends ActiveRecord implements IdentityInterface
             'password' => '用户密码',
             'salt' => '盐',
             'email' => '用户邮箱',
+            'roles'=>'角色名称',
             'token' => '自动登录令牌',
             'token_create_time' => '令牌创建时间',
-            'add_time' => '注册时间',
+            'add_time' => '添加时间',
             'last_login_time' => '最后登录时间',
             'last_login_ip' => '最后登录IP',
         ];
@@ -107,7 +109,7 @@ class Admin extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        // TODO: Implement findIdentityByAccessToken() method.
+        return static::findOne(['access_token' => $token]);
     }
 
     /**

@@ -43,4 +43,15 @@ class GoodsGallery extends \yii\db\ActiveRecord
             'path' => '商品图片地址',
         ];
     }
+
+//    1对多
+//    public function getGoods()
+//    {
+//        return Goods::findAll(['category_id'=>$this->id]);
+//    }
+
+    public function getGoods()
+    {
+        return $this->hasMany(Goods::className(['id'=>'category_id']));
+    }
 }

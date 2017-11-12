@@ -13,16 +13,28 @@
     <div class="col-md-8">
         <form class="form-inline pull-right">
 <!--                <input type="text" class="form-control" name="status" id="minprice" size="10" placeholder="商品状态">-->
-                <input type="text" class="form-control" name="minprice" id="minprice" size="10" placeholder="最低价">
+                <input type="text" class="form-control" name="minPrice" id="minprice" size="10" placeholder="最低价">
                 --
-                <input type="text" class="form-control" name="maxprice" id="maxprice" size="10"  placeholder="最高价">
+                <input type="text" class="form-control" name="maxPrice" id="maxprice" size="10"  placeholder="最高价">
                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="请输入商品名称和货号">
             <button type="submit" class="btn btn-success">搜索</button>
         </form>
     </div>
 </div>
 
-
+<?php
+//$searchForm=new \backend\models\SearchForm();
+//$form=\yii\bootstrap\ActiveForm::begin([
+//        'method'=>'get',
+//        'action'=>['index'],
+//        'options'=>['class'=>'form-inline pull-right']]);
+//echo $form->field($searchForm,'minPrice')->label(false)->textInput(['size'=>10,'placeholder'=>'最低价']);
+//echo '--';
+//echo $form->field($searchForm,'maxPrice')->label(false)->textInput(['size'=>10,'placeholder'=>'最高价']);
+//echo $form->field($searchForm,'keyword')->label(false)->textInput(['size'=>10,'placeholder'=>'关键字']);
+//echo \yii\bootstrap\Html::submitButton('搜索',['class'=>'btn btn-success']);
+//\yii\bootstrap\ActiveForm::end();
+?>
 
 
 <table class="table table-bordered table-hover" style="text-align: center">

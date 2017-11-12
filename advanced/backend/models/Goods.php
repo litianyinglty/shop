@@ -61,6 +61,7 @@ class Goods extends \yii\db\ActiveRecord
             'name' => '商品名称',
             'sn' => '商品货号',
             'logo' => '商品图片',
+            'images'=>'缩略图',
             'category_id' => '商品分类',
             'brand_id' => '商品品牌',
             'market_price' => '市场价格',
@@ -77,9 +78,14 @@ class Goods extends \yii\db\ActiveRecord
      * 1对1，得到商品分类
      * @return \yii\db\ActiveQuery
      */
+//    public function getCate()
+//    {
+//        return $this->hasOne(GoodsCategory::className(),['id'=>'category_id']);
+//    }
+
     public function getCate()
     {
-        return $this->hasOne(GoodsCategory::className(),['id'=>'category_id']);
+        return GoodsCategory::findOne($this->category_id);
     }
 
     /**
@@ -106,6 +112,7 @@ class Goods extends \yii\db\ActiveRecord
         ];
     }
 
+//    得到列表页显示的图片地址
     public function getImage()
     {
         if(substr($this->logo,0,7)=="http://"){

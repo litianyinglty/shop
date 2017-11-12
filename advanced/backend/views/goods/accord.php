@@ -49,8 +49,7 @@
             <td><?=$good->sort?></td>
             <td><?=date('Y-m-d H:i:s',$good->create_at)?></td>
             <td>
-                <?=\yii\bootstrap\Html::a('',['goods/list','id'=>$good->id],['class'=>'btn btn-info btn-xs glyphicon glyphicon-th-list'])?>
-                <?=\yii\bootstrap\Html::a('',['goods/reduction','id'=>$good->id],['class'=>'btn btn-success btn-xs glyphicon glyphicon-plus'])?>
+                <?=\yii\bootstrap\Html::a('',['goods/reduction','id'=>$good->id],['class'=>'btn btn-success btn-xs glyphicon glyphicon-share-alt'])?>
                 <?=\yii\bootstrap\Html::a('',['goods/del','id'=>$good->id],['class'=>'btn btn-danger btn-xs glyphicon glyphicon-trash'])?>
             </td>
         </tr>

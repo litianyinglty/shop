@@ -50,7 +50,7 @@ class GoodsCategory extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => '分类名称',
             'intro' => '简介',
-            'parent_id' => '父ID',
+            'parent_id' => '分类',
             'tree' => '树',
             'lft' => '左值',
             'rgt' => '右值',

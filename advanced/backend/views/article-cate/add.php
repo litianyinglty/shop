@@ -1,3 +1,4 @@
+<?=\yii\bootstrap\Html::a('返回',['article-cate/index'],['class'=>'btn btn-info']);?>
 <?php
 $form=\yii\bootstrap\ActiveForm::begin();
 echo $form->field($articleCate,'name')->textInput();
