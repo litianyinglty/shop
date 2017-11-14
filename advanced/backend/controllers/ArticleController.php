@@ -82,7 +82,6 @@ class ArticleController extends \yii\web\Controller
         }
         $article->status=1;
 //        得到所有分类
-
         $cates=ArticleCate::find()->all();
         $options=ArrayHelper::map($cates,'id','name');
         return $this->render('add',['article'=>$article,'options'=>$options,'articleDetail'=>$articleDetail]);

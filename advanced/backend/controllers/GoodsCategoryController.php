@@ -42,8 +42,15 @@ class GoodsCategoryController extends \yii\web\Controller
 //                    创建子节点
 //                    先找出父节点
                     $cateParent=GoodsCategory::findOne(['id'=>$model->parent_id]);
-//                    把当前对象添加到父类对象中
-                    $model->prependTo($cateParent);
+//                    var_dump($cateParent->depth);exit;
+//                    找出父节点一级的深度大于2就不再添加
+                    if($cateParent->depth > 2){
+                        \Yii::$app->session->setFlash('danger','该节点下不能再添加目录');
+                        return $this->refresh();
+                    }else{
+//                  把当前对象添加到父类对象中
+                        $model->prependTo($cateParent);
+                    }
                 }
                 \Yii::$app->session->setFlash('success','添加目录成功');
                 return $this->refresh();

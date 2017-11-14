@@ -188,7 +188,7 @@ class GoodsController extends \yii\web\Controller
                 $goodIntro->goods_id=$good->id;
                 $goodIntro->save();
             }
-//            删除所有相册图片
+//            删除数据库所有相册图片
             GoodsGallery::deleteAll(['goods_id'=>$good->id]);
             $goodGallery=$request->post()['Goods']['images'];
 //            var_dump($goodGallery);exit;

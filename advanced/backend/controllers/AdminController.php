@@ -8,7 +8,6 @@ use yii\helpers\ArrayHelper;
 
 class AdminController extends \yii\web\Controller
 {
-
     /**
      * @return string
      * 后台列表显示
@@ -42,7 +41,6 @@ class AdminController extends \yii\web\Controller
 //                    得到角色
                     if($admin->roles){
                         foreach ($admin->roles as $role){
-//                            var_dump($role);exit;
 //                            得到角色
                             $role=$auth->getRole($role);
                             $auth->assign($role,$admin->id);
@@ -156,10 +154,10 @@ class AdminController extends \yii\web\Controller
                         $admin->last_login_ip = \Yii::$app->request->getUserIP();
                         $admin->save();
                         \Yii::$app->session->setFlash('success','登录成功');
-                        return $this->redirect(['admin/index']);
+                        return $this->redirect(['admin/home']);
                     }
                 } else {
-                    $model->addError('password', '密码错误');
+                    $model->addError('password', '用户密码错误');
                 }
             } else {
                 $model->addError('username', '用户名不存在');
@@ -168,9 +166,19 @@ class AdminController extends \yii\web\Controller
         return $this->render('login',['model'=>$model]);
     }
 
+    /**
+     * 退出登录
+     * @return \yii\web\Response
+     *
+     */
     public function actionLogout()
     {
         \Yii::$app->user->logout();
         return $this->redirect(['admin/login']);
+    }
+
+    public function actionHome()
+    {
+        return $this->render('index2');
     }
 }
