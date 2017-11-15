@@ -121,11 +121,12 @@ class GoodsCategoryController extends \yii\web\Controller
                 }catch (\yii\db\Exception $e){
 //                    var_dump($e->getMessage());exit;
                     \Yii::$app->session->setFlash('danger',$e->getMessage());
+                    return $model->refresh();
                 }
-                \Yii::$app->session->setFlash('success','编辑目录成功');
-//                return $this->refresh();
-                return $this->redirect(['goods-category/index']);
             }
+            \Yii::$app->session->setFlash('success','编辑目录成功');
+//                return $this->refresh();
+            return $this->redirect(['goods-category/index']);
         }
 //        得到所有分类
         $cates=GoodsCategory::find()->asArray()->all();
@@ -141,20 +142,20 @@ class GoodsCategoryController extends \yii\web\Controller
      */
     public function actionDel($id)
     {
-//        $cates=GoodsCategory::find()->where(['parent_id'=>$id])->all();
+        $cates=GoodsCategory::find()->where(['parent_id'=>$id])->all();
         $model=GoodsCategory::findOne($id);
-        $model->deleteWithChildren();
-//        if($cates){
-//            \Yii::$app->session->setFlash('danger','该目录下有子目录');
-//        }else{
-//                if($model->parent_id == 0 ){
-//                    \Yii::$app->session->setFlash('success','该目录为根结点不能被删除');
-//                }else{
-//                    $model->delete();
-//                    \Yii::$app->session->setFlash('danger','删除成功');
-//                }
-////            var_dump($model);die();
-//        }
+//        $model->deleteWithChildren();
+        if($cates){
+            \Yii::$app->session->setFlash('danger','该目录下有子目录');
+        }else{
+                if($model->parent_id == 0 ){
+                    \Yii::$app->session->setFlash('success','该目录为根结点不能被删除');
+                }else{
+                    $model->delete();
+                    \Yii::$app->session->setFlash('danger','删除成功');
+                }
+//            var_dump($model);die();
+        }
         return $this->redirect(['goods-category/index']);
 
     }
