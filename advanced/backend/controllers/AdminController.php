@@ -38,7 +38,7 @@ class AdminController extends \yii\web\Controller
                     $admin->password=$password;
                     $admin->token=\Yii::$app->security->generateRandomString();
                     $admin->save();
-//                    得到角色
+//                    找到角色
                     if($admin->roles){
                         foreach ($admin->roles as $role){
 //                            得到角色
