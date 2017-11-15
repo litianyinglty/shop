@@ -51,6 +51,7 @@ class ArticleController extends \yii\web\Controller
             }
         }
         $article->status=1;
+        $article->sort=100;
 //        得到所有分类
         $cates=ArticleCate::find()->all();
         $options=ArrayHelper::map($cates,'id','name');
@@ -80,7 +81,6 @@ class ArticleController extends \yii\web\Controller
                 return $this->redirect(['article/index']);
             }
         }
-        $article->status=1;
 //        得到所有分类
         $cates=ArticleCate::find()->all();
         $options=ArrayHelper::map($cates,'id','name');

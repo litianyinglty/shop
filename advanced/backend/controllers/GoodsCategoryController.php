@@ -77,25 +77,31 @@ class GoodsCategoryController extends \yii\web\Controller
         $model=GoodsCategory::findOne($id);
         $request=\Yii::$app->request;
         if($request->isPost){
-            //查询该节点下是否有子类
-//            $cates=GoodsCategory::find()->where(['parent_id'=>$id])->all();
-////            var_dump($cates);exit;
-//            if(!empty($cates)){
-//                \Yii::$app->session->setFlash('danger','该节点下有子类不能移动');
+//          查询该节点下是否有子类
+            $cates=GoodsCategory::find()->where(['parent_id'=>$id])->all();
+//            var_dump($cates);exit;
+            if(!empty($cates)){
+                \Yii::$app->session->setFlash('danger','该节点下有子类不能移动');
+//                直接刷新页面
+                $model->refresh();
 //                return $this->redirect(['goods-category/index']);
-//            }
-//            $a=$request->post('GoodsCategory');
-//            //修改到分类的ID
-//            $cate=$a['parent_id'];
-//            //通过ID找到深度
-//            $depth_a=GoodsCategory::findOne($cate)->depth;
-//            //准备修改数据的深度
-//            $depth_b=$model->depth;
-//            if($depth_b<=$depth_a){
-//               \Yii::$app->session->setFlash('danger','不能修改到同类和子类中');
+            }
+            $a=$request->post('GoodsCategory');
+//            var_dump($a);exit;
+            //修改到分类的ID
+            $cate=$a['parent_id'];
+//            var_dump($cate);exit;
+            //通过ID找到深度
+            $depth_a=GoodsCategory::findOne($cate)->depth;
+            //准备修改数据的深度
+            $depth_b=$model->depth;
+//            var_dump($depth_b);exit;
+            if($depth_b<=$depth_a){
+               \Yii::$app->session->setFlash('danger','不能修改到同类和子类中');
+               $model->refresh();
 //               return $this->redirect(['goods-category/edit','id'=>$id]);
-//            }
-//            GoodsCategory::findOne(['id'=>$request->post()->parent_id]);
+            }
+            GoodsCategory::findOne(['id'=>$request->post()->parent_id]);
 //            数据绑定
             $model->load($request->post());
 //            var_dump($model);exit;

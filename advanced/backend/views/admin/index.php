@@ -9,7 +9,6 @@
         <th style="text-align: center">用户名</th>
         <th style="text-align: center">邮箱</th>
         <th style="text-align: center">角色描述</th>
-        <th style="text-align: center">自动登录令牌</th>
         <th style="text-align: center">令牌创建时间</th>
         <th style="text-align: center">添加时间</th>
         <th style="text-align: center">最后登录时间</th>
@@ -35,7 +34,6 @@
                 echo rtrim($arr,'//');
                 ?>
             </td>
-            <td><?=$admin->token?></td>
             <td><?=date('Y-m-d H:i:s',$admin->token_create_time)?></td>
             <td><?=date('Y-m-d H:i:s',$admin->add_time)?></td>
             <td><?=date('Y-m-d H:i:s',$admin->last_login_time)?></td>

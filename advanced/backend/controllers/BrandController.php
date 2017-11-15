@@ -46,6 +46,7 @@ class BrandController extends \yii\web\Controller
             }
         }
         $brand->status=1;
+        $brand->sort=100;
         return $this->render("add",['brand'=>$brand]);
     }
 

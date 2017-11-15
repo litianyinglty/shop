@@ -30,6 +30,7 @@ class ArticleCateController extends \yii\web\Controller
             return $this->redirect(['article-cate/index']);
         }
         $articleCate->is_help=0;
+        $articleCate->sort=100;
         return $this->render('add',[ 'articleCate' => $articleCate]);
     }
 
