@@ -83,8 +83,8 @@ class GoodsCategoryController extends \yii\web\Controller
             if(!empty($cates)){
                 \Yii::$app->session->setFlash('danger','该节点下有子类不能移动');
 //                直接刷新页面
-                $model->refresh();
-//                return $this->redirect(['goods-category/index']);
+//                return $model->refresh();
+                return $this->redirect(['goods-category/index']);
             }
             $a=$request->post('GoodsCategory');
 //            var_dump($a);exit;
@@ -98,8 +98,8 @@ class GoodsCategoryController extends \yii\web\Controller
 //            var_dump($depth_b);exit;
             if($depth_b<=$depth_a){
                \Yii::$app->session->setFlash('danger','不能修改到同类和子类中');
-               $model->refresh();
-//               return $this->redirect(['goods-category/edit','id'=>$id]);
+//               $model->refresh();
+               return $this->redirect(['goods-category/edit','id'=>$id]);
             }
             GoodsCategory::findOne(['id'=>$request->post()->parent_id]);
 //            数据绑定
@@ -121,12 +121,12 @@ class GoodsCategoryController extends \yii\web\Controller
                 }catch (\yii\db\Exception $e){
 //                    var_dump($e->getMessage());exit;
                     \Yii::$app->session->setFlash('danger',$e->getMessage());
-                    return $model->refresh();
+                    $model->refresh();
                 }
+                \Yii::$app->session->setFlash('success','编辑目录成功');
+////                return $this->refresh();
+                return $this->redirect(['goods-category/index']);
             }
-            \Yii::$app->session->setFlash('success','编辑目录成功');
-//                return $this->refresh();
-            return $this->redirect(['goods-category/index']);
         }
 //        得到所有分类
         $cates=GoodsCategory::find()->asArray()->all();

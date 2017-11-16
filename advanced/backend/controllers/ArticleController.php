@@ -12,6 +12,18 @@ use yii\helpers\ArrayHelper;
 class ArticleController extends \yii\web\Controller
 {
     /**
+     * 富文本编辑器上传图片的方法
+     * @return array
+     */
+    public function actions()
+    {
+        return [
+            'upload' => [
+                'class' => 'kucha\ueditor\UEditorAction',
+            ]
+        ];
+    }
+    /**
      * 文章列表
      * @return string
      */
