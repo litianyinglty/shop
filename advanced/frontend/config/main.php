@@ -16,9 +16,15 @@ return [
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => \frontend\models\Member::className(),
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'loginUrl' => 'member/login',
+            'on beforeLogin' => function($event) {
+                $member = $event->identity; //这里的就是User Model的实例了
+                $member->last_login_time = time();
+                $member->save();
+            },
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend

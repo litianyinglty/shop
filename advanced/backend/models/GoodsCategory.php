@@ -77,15 +77,30 @@ class GoodsCategory extends \yii\db\ActiveRecord
         ];
     }
 
+
     public static function find()
     {
-
         return new MenuQuery(get_called_class());
     }
 
+    /**
+     * 为分类名称创建别名
+     * @return string
+     */
     public function getNameText()
     {
         return str_repeat('...',3*$this->depth).$this->name;
 
+    }
+
+    /**
+     * 自身调用自己，得到所有分类，1对多
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChildren()
+    {
+//        两种方法
+        return $this->hasMany(self::className(),['parent_id'=>'id']);
+//        return self::find()->where(['parent_id'=>$this->id])->all();
     }
 }
