@@ -12,6 +12,9 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'cart'=>[
+            'class'=>\frontend\components\Cart::className(),
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

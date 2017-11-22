@@ -78,15 +78,15 @@ class Goods extends \yii\db\ActiveRecord
      * 1对1，得到商品分类
      * @return \yii\db\ActiveQuery
      */
-//    public function getCate()
-//    {
-//        return $this->hasOne(GoodsCategory::className(),['id'=>'category_id']);
-//    }
-
     public function getCate()
     {
-        return GoodsCategory::findOne($this->category_id);
+        return $this->hasOne(GoodsCategory::className(),['id'=>'category_id']);
     }
+
+//    public function getCate()
+//    {
+//        return GoodsCategory::findOne($this->category_id);
+//    }
 
     /**
      * 1对1，得到商品品牌
@@ -97,6 +97,10 @@ class Goods extends \yii\db\ActiveRecord
         return $this->hasOne(Brand::className(),['id'=>'brand_id']);
     }
 
+    public function getIntro()
+    {
+        return $this->hasOne(GoodsIntro::className(),['goods_id'=>'id']);
+    }
     /**
      * 系统内置时间行为
      * @return array

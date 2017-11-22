@@ -89,7 +89,7 @@ class GoodsCategory extends \yii\db\ActiveRecord
      */
     public function getNameText()
     {
-        return str_repeat('...',3*$this->depth).$this->name;
+        return str_repeat('..',3*$this->depth).$this->name;
 
     }
 
