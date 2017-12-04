@@ -100,11 +100,13 @@ class OrderController extends \yii\web\Controller
                 $transaction->commit();
                 switch ($payId){
                     case '1':
+                        return $this->redirect(['flow','orderId'=>$order->id]);
                         break;
                     case '2':
                         return $this->redirect(['flow','orderId'=>$order->id]);
                         break;
                     case '3':
+                        return $this->redirect(['flow','orderId'=>$order->id]);
                         break;
                 }
 //              捕获异常
@@ -196,5 +198,52 @@ class OrderController extends \yii\web\Controller
             return true; // 返回处理完成
         });
         return $response;
+    }
+
+    /**
+     * 未及时处理订单
+     */
+    public function actionFlush()
+    {
+        $db = \Yii::$app->db;
+//            开启事务
+        $transaction = $db->beginTransaction();
+        try{
+//        1、找出所有超时的订单
+//        首先条件是状态，未付款的
+//        超时的    15分钟   time()-15*60>create_dt
+            $orders=Order::find()->where(['status'=>1])->andWhere(['<','create_at',time()-900])->all();
+//        var_dump($orders);exit;
+//        2、修改状态
+//        2、1得到订单所有ID
+            $ordersIds=ArrayHelper::map($orders,'id','id');
+//        var_dump($ordersId);exit;
+//        2、2更新所有订单状态为0，已取消
+            $ordersSave=Order::updateAll(['status'=>0],['in','id',$ordersIds]);
+//        var_dump($orders);exit;
+//        查询所有的库存
+//        3、把库存给加回去,判断成功执行下面操作
+            if($ordersSave){
+//            3、1循环订单ID
+                foreach ($ordersIds as $ordersId){
+//                3、2找出当前订单所有商品信息
+                    $orderDetails=OrderDetail::find()->where(['order_info_id'=>$ordersId])->all();
+//                3、3循环商品
+                    foreach ($orderDetails as $orderDetail){
+                        Goods::updateAllCounters(['stock'=>$orderDetail->amount],['id'=>$orderDetail->goods_id]);
+                    }
+                }
+            }
+//              提交事务
+            $transaction->commit();
+        }catch (Exception $e){
+//            事务回滚
+            $transaction->rollBack();
+        }
+    }
+
+    public function actionList()
+    {
+        return $this->renderPartial('list');
     }
 }

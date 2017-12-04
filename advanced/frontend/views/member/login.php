@@ -19,7 +19,7 @@
             echo '<ul>';
             echo $form->field($model,'username')->textInput(['class'=>'txt'])->label("用户姓名：");
             echo $form->field($model,'password')->passwordInput(['class'=>'txt'])->label("用户密码：");
-            echo  $form->field($model,'rememberMe')->hint('rememberMe')->checkbox(['style'=>'margin-top:-3px;margin-right:5px']);
+            echo $form->field($model,'rememberMe')->hint('rememberMe')->checkbox(['style'=>'margin-top:-3px;margin-right:5px']);
             echo '</ul>';
             echo '<br/>';
             echo \yii\bootstrap\Html::submitButton('',['class'=>'login_btn']);

@@ -64,6 +64,10 @@ class MemberController extends \yii\web\Controller
      */
     public function actionSms()
     {
+//        1、限制同一个手机号一天只能发几条
+
+//        2、同一手机号发送验证码间隔时间不能低于一分钟
+
 //        接收参数
         $tel=\Yii::$app->request->post('tel');
 //        1、生成验证码
